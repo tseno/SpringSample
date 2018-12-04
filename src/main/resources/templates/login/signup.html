@@ -11,12 +11,11 @@
 <div class="col-sm-5">
     <div class="page-header">
         <h1>ユーザー登録画面</h1>
-
     </div>
     <form method="post" action="@{/signup}">
         <table>
             <tr>
-                <th class="active col-sm-3">ユーザーID</th>
+                <th class="active">ユーザーID</th>
                 <td>
                     <div class="form-group">
                         <input type="text" class="form-control"/>
@@ -60,13 +59,13 @@
                 <td>
                     <div class="form-group">
                         <div th:each="item:${radioMarriage}">
-                            <input type="radio" name="radioMarriage" th:text="${item.key}" th:value="${item.value}"/>
+                            <input type="radio" name="radioMarriage" th:text="${item.key}" th:checked="${item.value}"/>
                         </div>
                     </div>
                 </td>
             </tr>
         </table>
-        <button class="btn btn-primary" type="submit">ログイン</button>
+        <button class="btn btn-primary" type="submit">ユーザー登録</button>
     </form>
 </div>
 </body>
