@@ -7,7 +7,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserDaoJdbcImpl implements UserDao {
@@ -17,7 +20,9 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public int count() throws DataAccessException {
-        return 0;
+        int count = jdbc.queryForObject("SELECT COUNT(*) FROM m_user", Integer.class);
+
+        return count;
     }
 
     @Override
@@ -43,7 +48,25 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public List<User> selectMany() throws DataAccessException {
-        return null;
+
+        List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM m_user");
+        List<User> userList = new ArrayList<>();
+
+        for(Map<String,Object> map: getList) {
+            User user = new User();
+
+            user.setUserId((String)map.get("user_id"));
+            user.setPassword((String)map.get("password"));
+            user.setUserName((String)map.get("user_name"));
+            user.setBirthday((Date)map.get("birthday"));
+            user.setAge((Integer) map.get("age"));
+            user.setMarriage((Boolean) map.get("marriage"));
+            user.setRole((String)map.get("role"));
+
+            userList.add(user);
+        }
+
+        return userList;
     }
 
     @Override
