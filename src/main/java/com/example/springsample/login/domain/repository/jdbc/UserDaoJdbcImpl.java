@@ -43,7 +43,19 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User selectOne(String userId) throws DataAccessException {
-        return null;
+        Map<String, Object> map = jdbc.queryForMap("SELECT * FROM m_user WHERE user_id = ?", userId);
+
+        User user = new User();
+
+        user.setUserId((String) map.get("user_id"));
+        user.setPassword((String) map.get("password"));
+        user.setUserName((String) map.get("user_name"));
+        user.setBirthday((Date) map.get("birthday"));
+        user.setAge((Integer) map.get("age"));
+        user.setMarriage((Boolean) map.get("marriage"));
+        user.setRole((String) map.get("role"));
+
+        return user;
     }
 
     @Override
@@ -52,16 +64,16 @@ public class UserDaoJdbcImpl implements UserDao {
         List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM m_user");
         List<User> userList = new ArrayList<>();
 
-        for(Map<String,Object> map: getList) {
+        for (Map<String, Object> map : getList) {
             User user = new User();
 
-            user.setUserId((String)map.get("user_id"));
-            user.setPassword((String)map.get("password"));
-            user.setUserName((String)map.get("user_name"));
-            user.setBirthday((Date)map.get("birthday"));
+            user.setUserId((String) map.get("user_id"));
+            user.setPassword((String) map.get("password"));
+            user.setUserName((String) map.get("user_name"));
+            user.setBirthday((Date) map.get("birthday"));
             user.setAge((Integer) map.get("age"));
             user.setMarriage((Boolean) map.get("marriage"));
-            user.setRole((String)map.get("role"));
+            user.setRole((String) map.get("role"));
 
             userList.add(user);
         }

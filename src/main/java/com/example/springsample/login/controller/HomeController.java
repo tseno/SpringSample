@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -29,12 +30,12 @@ public class HomeController {
         List<User> userList = userService.selectMany();
         model.addAttribute("userList", userList);
         int count = userService.count();
-        model.addAttribute("count", count);
+        model.addAttribute("userListCount", count);
         return "login/homeLayout";
     }
 
-    @GetMapping("/logout")
-    public String getLogout() {
+    @PostMapping("/logout")
+    public String postLogout() {
         return "redirect:/login";
     }
 
