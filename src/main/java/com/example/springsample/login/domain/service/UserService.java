@@ -29,6 +29,17 @@ public class UserService {
         return result;
     }
 
+    public boolean update(User user) {
+        int rowNumber = dao.updateOne(user);
+
+        boolean result = false;
+        if (rowNumber > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+
     public int count() {
         return dao.count();
     }
