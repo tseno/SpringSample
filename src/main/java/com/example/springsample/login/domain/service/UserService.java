@@ -11,11 +11,10 @@ import java.util.List;
 @Service
 public class UserService {
 
-    final
-    UserDao dao;
+    final UserDao dao;
 
     @Autowired
-    public UserService(@Qualifier("userDaoJdbcImpl") UserDao dao) {
+    public UserService(@Qualifier("UserDaoJdbcImpl3") UserDao dao) {
         this.dao = dao;
     }
 
@@ -29,7 +28,7 @@ public class UserService {
         return result;
     }
 
-    public boolean update(User user) {
+    public boolean updateOne(User user) {
         int rowNumber = dao.updateOne(user);
 
         boolean result = false;
@@ -39,6 +38,15 @@ public class UserService {
         return result;
     }
 
+    public boolean deleteOne(String userId) {
+        int rowNumber = dao.deleteOne(userId);
+
+        boolean result = false;
+        if (rowNumber > 0) {
+            result = true;
+        }
+        return result;
+    }
 
     public int count() {
         return dao.count();

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("UserDaoJdbcImpl")
 public class UserDaoJdbcImpl implements UserDao {
 
     @Autowired
@@ -87,7 +87,7 @@ public class UserDaoJdbcImpl implements UserDao {
                         " user_name = ?," +
                         " birthday = ?," +
                         " age = ?," +
-                        " marriage = ?," +
+                        " marriage = ?" +
                         " WHERE user_id = ?",
                 user.getPassword(),
                 user.getUserName(),
@@ -100,7 +100,9 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public int deleteOne(String userId) throws DataAccessException {
-        return 0;
+        int rowNumber = jdbc.update("DELETE FROM m_user WHERE user_id = ?", userId);
+
+        return rowNumber;
     }
 
     @Override

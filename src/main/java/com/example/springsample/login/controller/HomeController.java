@@ -83,17 +83,34 @@ public class HomeController {
         user.setAge(form.getAge());
         user.setMarriage(form.isMarriage());
 
-        boolean result = userService.update(user);
+        boolean result = userService.updateOne(user);
 
         if (result) {
             model.addAttribute("result","更新成功");
         } else {
             model.addAttribute("result","更新失敗");
         }
-
+        // 一覧画面を表示
         return getUserList(model);
     }
 
+    @PostMapping(value = "/userDetail", params = "delete")
+    public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
+
+        System.out.println("削除ボタンの処理");
+
+        User user = new User();
+
+        boolean result = userService.deleteOne(form.getUserId());
+
+        if (result) {
+            model.addAttribute("result","削除成功");
+        } else {
+            model.addAttribute("result","削除失敗");
+        }
+        // 一覧画面を表示
+        return getUserList(model);
+    }
 
     @PostMapping("/logout")
     public String postLogout() {
