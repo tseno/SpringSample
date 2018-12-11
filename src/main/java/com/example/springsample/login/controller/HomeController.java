@@ -3,9 +3,14 @@ package com.example.springsample.login.controller;
 import com.example.springsample.login.domain.model.SignupForm;
 import com.example.springsample.login.domain.model.User;
 import com.example.springsample.login.domain.service.UserService;
+
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,8 +123,24 @@ public class HomeController {
     }
 
     @GetMapping("/userList/csv")
-    public String getUserListCsv(Model model) {
-        return getUserList(model);
+    public ResponseEntity<byte[]> getUserListCsv(Model model) {
+
+        userService.userCsvOut();
+
+        byte[] bytes = null;
+
+        try {
+            bytes = userService.getFile("sample.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/csv; charset=UTF-8");
+        headers.setContentDispositionFormData("filename", "sample.csv");
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+
     }
 
 
