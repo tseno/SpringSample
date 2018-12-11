@@ -4,6 +4,7 @@ import com.example.springsample.login.domain.model.User;
 import com.example.springsample.login.domain.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -95,6 +96,10 @@ public class UserDaoJdbcImpl implements UserDao {
                 user.getAge(),
                 user.isMarriage(),
                 user.getUserId());
+
+//        if (rowNumber > 0) {
+//            throw new DataRetrievalFailureException("トランザクションテスト");
+//        }
         return rowNumber;
     }
 

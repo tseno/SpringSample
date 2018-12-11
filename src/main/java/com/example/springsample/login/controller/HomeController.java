@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,12 +89,16 @@ public class HomeController {
         user.setAge(form.getAge());
         user.setMarriage(form.isMarriage());
 
-        boolean result = userService.updateOne(user);
+        try {
+            boolean result = userService.updateOne(user);
 
-        if (result) {
-            model.addAttribute("result","更新成功");
-        } else {
-            model.addAttribute("result","更新失敗");
+            if (result) {
+                model.addAttribute("result","更新成功");
+            } else {
+                model.addAttribute("result","更新失敗");
+            }
+        } catch (DataAccessException e) {
+            model.addAttribute("result","更新失敗（トランザクションテスト）");
         }
         // 一覧画面を表示
         return getUserList(model);
