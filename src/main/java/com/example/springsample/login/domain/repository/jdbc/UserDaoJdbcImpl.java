@@ -4,6 +4,7 @@ import com.example.springsample.login.domain.model.User;
 import com.example.springsample.login.domain.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -107,6 +108,9 @@ public class UserDaoJdbcImpl implements UserDao {
     public int deleteOne(String userId) throws DataAccessException {
         int rowNumber = jdbc.update("DELETE FROM m_user WHERE user_id = ?", userId);
 
+//        if (rowNumber > 0) {
+//            throw new DataAccessResourceFailureException("");
+//        }
         return rowNumber;
     }
 
