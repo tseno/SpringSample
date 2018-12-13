@@ -7,6 +7,7 @@ import com.example.springsample.login.domain.service.UserService;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -90,12 +91,12 @@ public class HomeController {
             boolean result = userService.updateOne(user);
 
             if (result) {
-                model.addAttribute("result","更新成功");
+                model.addAttribute("result", "更新成功");
             } else {
-                model.addAttribute("result","更新失敗");
+                model.addAttribute("result", "更新失敗");
             }
         } catch (DataAccessException e) {
-            model.addAttribute("result","更新失敗（トランザクションテスト）");
+            model.addAttribute("result", "更新失敗（トランザクションテスト）");
         }
         // 一覧画面を表示
         return getUserList(model);
@@ -111,9 +112,9 @@ public class HomeController {
         boolean result = userService.deleteOne(form.getUserId());
 
         if (result) {
-            model.addAttribute("result","削除成功");
+            model.addAttribute("result", "削除成功");
         } else {
-            model.addAttribute("result","削除失敗");
+            model.addAttribute("result", "削除失敗");
         }
         // 一覧画面を表示
         return getUserList(model);
@@ -143,6 +144,14 @@ public class HomeController {
 
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/admin")
+    public String getAdmin(Model model) {
+
+        model.addAttribute("contents", "login/admin :: admin_contents");
+
+        return "login/homeLayout";
     }
 
 }
